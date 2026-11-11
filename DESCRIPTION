@@ -2,7 +2,7 @@ Package: TxEffectsSurvival
 Type: Package
 Title: Treatment Effect Inference for Terminal and Non-Terminal Events
         under Competing Risks
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: c(
     person(given = "Daewoo", family = "Pak", email = "dpak@yonsei.ac.kr", role = c("aut", "cre")),
     person(given = "Song", family = "Yang", email = "yangso@nhlbi.nih.gov", role = c("aut"))
@@ -38,6 +38,6 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.3
 NeedsCompilation: no
-Packaged: 2026-01-08 01:06:24 UTC; dpak
+Packaged: 2026-11-11 01:36:19 UTC; dpak
 Repository: CRAN
-Date/Publication: 2026-01-09 18:00:02 UTC
+Date/Publication: 2026-11-11 03:50:02 UTC

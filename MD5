@@ -1,6 +1,6 @@
-f6507d5b433c7c5d080c93c130ce75fe *DESCRIPTION
+253b54f0e2e3bd32ccbfcbe665466ea7 *DESCRIPTION
 2e3aec2ff466415d3fc04e0c2eb25481 *NAMESPACE
-c372eae70b4a55ac06275af30b842b27 *NEWS.md
+27fd6b22155d31be9b14a5c6faeb8bb7 *NEWS.md
 52763e9d038dee87ffedf3be20645c9f *R/fn_ds.R
 7b7f9645ef618c024bfd9574a0f55142 *R/fn_ginf.R
 48ebed43c59699187d904654aa9061d5 *R/fn_glinsim.R
@@ -9,7 +9,7 @@ c372eae70b4a55ac06275af30b842b27 *NEWS.md
 f2d5df139c8fb8c1ed7b6d3dba086293 *R/fn_pval.R
 16fcce4a4893a7e38410b4ccce8651cb *R/fn_solve.R
 9910ec5966877d328ccf889490fcb1b3 *R/fn_tntinf.R
-6b450d31b2e2ca56dbd583e80aa5a0b9 *R/fn_wr0.R
+ed37623b824b8b74b8f6cf101fe3be50 *R/fn_wr0.R
 c00098c83248e6d0acd2035139744788 *R/print.tnt.analysis.R
 e1e7326520785bbeaf9302b1c4df4178 *R/print.wr.test.R
 d80919c3a58f3b8193998ecd6f7389fc *R/tnt.analysis.R

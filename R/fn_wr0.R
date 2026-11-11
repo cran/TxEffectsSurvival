@@ -1,7 +1,6 @@
 fn_wr0 <- function(yh, hcen, yd, dcen, zo) {
 
   loc <- order(zo)
-  zoct <- zo[loc]
   ydct <- yd[loc]
   dcenct <- dcen[loc]
   yhct <- yh[loc]
@@ -33,42 +32,34 @@ fn_wr0 <- function(yh, hcen, yd, dcen, zo) {
   win <- mean(s1)
   los <- mean(s2)
 
-  pwxyyp <- sum(s1i * (s1i - 1)) / (n1 * n2 * (n1 - 1))
-  pwxxpy <- sum(s1j * (s1j - 1)) / (n1 * n2 * (n2 - 1))
-  plxyyp <- sum(s2i * (s2i - 1)) / (n1 * n2 * (n1 - 1))
-  plxxpy <- sum(s2j * (s2j - 1)) / (n1 * n2 * (n2 - 1))
-  pmxyyp <- sum(s1i * (s2i - 1)) / (n1 * n2 * (n1 - 1))
-  pmxxpy <- sum(s1j * (s2j - 1)) / (n1 * n2 * (n2 - 1))
-
-  ts <- n2 / n
-  cs <- 1 - ts
-
-  xi1110 <- pwxyyp - win^2
-  xi1210 <- pmxyyp - win * los
-  xi2210 <- plxyyp - los^2
-
-  xi1101 <- pwxxpy - win^2
-  xi1201 <- pmxxpy - win * los
-  xi2201 <- plxxpy - los^2
-
-  sig11 <- xi1110 / ts + xi1101 / cs
-  sig12 <- xi1210 / ts + xi1201 / cs
-  sig22 <- xi2210 / ts + xi2201 / cs
-
   wr <- los / win
-  siglog <- sig11 / win^2 + sig22 / los^2 - 2 * sig12 / (los * win)
+  results <- list(wr = wr, ci_wr = rep(NA_real_, 2L),
+                  zv_wr = NA_real_, pval_wr = NA_real_)
+  if (win == 0 || los == 0) return(results)
 
-  wci <- c(wr * exp(-1.96 * sqrt(siglog / n)), wr * exp(1.96 * sqrt(siglog / n)))
+  # Exclude products from the identical control-treatment pair.
+  same_pair <- sum(s1 * s2)
+  shared_control <- c(
+    sum(s1i * (s1i - 1)),
+    sum(s1i * s2i) - same_pair,
+    sum(s2i * (s2i - 1))
+  ) / (n1 * n2 * (n2 - 1))
+  shared_treatment <- c(
+    sum(s1j * (s1j - 1)),
+    sum(s1j * s2j) - same_pair,
+    sum(s2j * (s2j - 1))
+  ) / (n1 * n2 * (n1 - 1))
 
-  zvawr <- log(wr) / sqrt(siglog / n)
-  pvawr <- 2 * pnorm(abs(zvawr), lower.tail = FALSE)
+  independent <- c(win^2, win * los, los^2)
+  covariance <- (shared_control - independent) / n1 +
+    (shared_treatment - independent) / n2
+  log_variance <- sum(covariance * c(1 / win^2, -2 / (los * win), 1 / los^2))
+  if (!is.finite(log_variance) || log_variance <= 0) return(results)
 
-  results <- list()
-  results$wr <- wr
-  results$ci_wr <- wci
-  results$zv_wr <- zvawr
-  results$pval_wr <- pvawr
-
+  se <- sqrt(log_variance)
+  results$ci_wr <- wr * exp(c(-1, 1) * 1.96 * se)
+  results$zv_wr <- log(wr) / se
+  results$pval_wr <- 2 * pnorm(abs(results$zv_wr), lower.tail = FALSE)
   results
 
 }
